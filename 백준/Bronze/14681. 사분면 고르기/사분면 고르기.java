@@ -1,24 +1,31 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
+        int x = Integer.parseInt(br.readLine());
+        int y = Integer.parseInt(br.readLine());
 
         if (x > 0 && y > 0) {
-            System.out.println(1);
+            bw.write("1");
         } else if (x < 0 && y > 0) {
-            System.out.println(2);
+            bw.write("2");
         } else if (x < 0 && y < 0) {
-            System.out.println(3);
+            bw.write("3");
         } else {
-            System.out.println(4);
+            bw.write("4");
         }
 
-        scanner.close();
+        br.close();
+        bw.flush();
+        bw.close();
 
     }
 }
