@@ -1,21 +1,25 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        String input = "";
 
-        while (scanner.hasNext()) { // 다음 줄에 입력이 있을 때 반복
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
+        while ((input = br.readLine()) != null) {
+            StringTokenizer st = new StringTokenizer(input, " ");
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
             bw.write(x + y + "\n");
         }
 
-        scanner.close();
+        br.close();
         bw.flush();
         bw.close();
 
