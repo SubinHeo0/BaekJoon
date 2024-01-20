@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 public class Main {
 
     private static class Node {
-        private int v;
-        private int w;
+        int v;
+        int w;
 
         public Node(int v, int w) {
             this.v = v;
@@ -18,25 +18,24 @@ public class Main {
         }
     }
 
-    public static List<List<Node>> graph;
-    public static boolean[] visited;
-    public static int[] dist;
+    private static boolean[] visited;
+    private static int[] dist;
+    private static List<List<Node>> graph;
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int V = Integer.parseInt(st.nextToken());
-        int E = Integer.parseInt(st.nextToken());
+        int V = Integer.parseInt(st.nextToken()); // 정점의 개수
+        int E = Integer.parseInt(st.nextToken()); // 간선의 개수
         int start = Integer.parseInt(br.readLine());
 
-        graph = new ArrayList<>();
         visited = new boolean[V + 1];
-        dist = new int[V + 1];
-
+        dist = new int[V + 1]; // 가중치 배열
+        graph = new ArrayList<>();
         for (int i = 0; i <= V; i++) {
+            dist[i] = Integer.MAX_VALUE; // 무한대로 초기화
             graph.add(new ArrayList<>());
-            dist[i] = Integer.MAX_VALUE;
         }
 
         // 그래프 입력값으로 초기화
@@ -48,7 +47,7 @@ public class Main {
             graph.get(u).add(new Node(v, w));
         }
 
-        // 다익스트라 알고리즘 수행
+        // 다익스트라 알고리즘
         dijkstra(start);
 
         for (int i = 1; i <= V; i++) {
@@ -59,17 +58,12 @@ public class Main {
     }
 
     private static void dijkstra(int start) {
-        // 우선 순위 큐 사용, 가중치를 기준으로 오름차순 정렬
         PriorityQueue<Node> queue = new PriorityQueue<>((o1, o2) -> o1.w - o2.w);
-        // 시작 노드 초기화
         queue.add(new Node(start, 0));
         dist[start] = 0;
-
         while (!queue.isEmpty()) {
-            // 최단 거리가 가장 짧은 노드를 꺼내서 방문 처리
             Node now = queue.poll();
-            if (!visited[now.v]) visited[now.v] = true;
-            // 인접 노드들 중 방문하지 않은 노드에 대해서만 최단 거리 업데이트
+            visited[now.v] = true;
             for (Node neighbor : graph.get(now.v)) {
                 if (!visited[neighbor.v] && dist[neighbor.v] > now.w + neighbor.w) {
                     dist[neighbor.v] = now.w + neighbor.w;
