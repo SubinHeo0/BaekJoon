@@ -1,28 +1,31 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-        int M = sc.nextInt();
-        int N = sc.nextInt();
-        int[] nums = new int[N + 1];
-        // 배열 인덱스값으로 초기화
-        for (int i = 2; i <= N; i++) { // 1은 소수가 아니므로 0으로 초기화, 2부터 인덱스값으로 초기화
-            nums[i] = i;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
+        int[] A = new int[end + 1];
+        // 배열 초기화
+        for (int i = 2; i <= end; i++) { // 1은 소수가 아니므로 2부터 초기화
+            A[i] = i;
         }
-        // 소수 찾기(에라토스테네스의 체)
-        for (int i = 2; i <= Math.sqrt(N); i++) {
-            if (nums[i] == 0) continue; // 0이면 볼 필요 없음
-            for (int j = i + i; j <= N; j += i) { // 배열을 돌면서 i의 배수는 0으로 바꾸기(i 자기자신은 제외)
-                nums[j] = 0;
+        // 에라토스테네스의 체
+        for (int i = 2; i <= Math.sqrt(end); i++) {
+            if (A[i] == 0) continue;
+            for (int j = i + i; j <= end; j += i) {
+                A[j] = 0;
             }
         }
-
-        for (int i = M; i <= N; i++) {
-            if (nums[i] != 0) System.out.println(nums[i]);
+        for (int i = start; i <= end; i++) {
+            if (A[i] != 0) System.out.println(A[i]);
         }
-
     }
+
+
 }
