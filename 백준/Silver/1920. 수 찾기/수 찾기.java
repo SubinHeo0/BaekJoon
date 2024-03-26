@@ -19,11 +19,10 @@ public class Main {
         Arrays.sort(A);
 
         int M = Integer.parseInt(br.readLine());
-        int[] find = new int[M];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            find[i] = Integer.parseInt(st.nextToken());
-            System.out.println(binarySearch(find[i], A, 0, A.length - 1));
+            int target = Integer.parseInt(st.nextToken());
+            System.out.println(binarySearch(target, A, 0, A.length - 1));
         }
 
     }
