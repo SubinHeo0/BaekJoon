@@ -1,37 +1,38 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
         int[] A = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            A[i] = sc.nextInt();
+            A[i] = Integer.parseInt(st.nextToken());
         }
         Arrays.sort(A);
 
-        int M = sc.nextInt();
+        int M = Integer.parseInt(br.readLine());
+        int[] find = new int[M];
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            boolean find = false;
-            int target = sc.nextInt();
-            int startIdx = 0;
-            int endIdx = A.length - 1;
-            while (startIdx <= endIdx) {
-                int midIdx = (startIdx + endIdx) / 2;
-                int mid = A[midIdx];
-                if (target < mid) endIdx = midIdx - 1;
-                else if (target > mid) startIdx = midIdx + 1;
-                else {
-                    find = true;
-                    break;
-                }
-            }
-            if (find) System.out.println(1);
-            else System.out.println(0);
+            find[i] = Integer.parseInt(st.nextToken());
+            System.out.println(binarySearch(find[i], A, 0, A.length - 1));
         }
 
+    }
+
+    private static int binarySearch(int target, int[] arr, int start, int end) {
+        if (start > end) return 0;
+        int mid = start + ((end - start) / 2);
+        if (target == arr[mid]) return 1;
+        else if (target > arr[mid]) return binarySearch(target, arr, mid + 1, end);
+        else return binarySearch(target, arr, start, mid - 1);
     }
 }
