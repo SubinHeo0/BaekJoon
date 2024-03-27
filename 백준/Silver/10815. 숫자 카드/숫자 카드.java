@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
@@ -9,6 +7,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
         int N = Integer.parseInt(br.readLine());
         int[] cards = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,19 +20,23 @@ public class Main {
         int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            int target = Integer.parseInt(st.nextToken());
-            System.out.print(binarySearch(target, cards, 0, N - 1) + " ");
+            int find = Integer.parseInt(st.nextToken());
+            int start = 0;
+            int end = N - 1;
+            int answer = 0;
+            while (start <= end) {
+                int mid = start + ((end - start) / 2);
+                if (find == cards[mid]) {
+                    answer = 1;
+                    break;
+                } else if (find > cards[mid]) start = mid + 1;
+                else end = mid - 1;
+            }
+            bw.write(answer + " ");
         }
 
+        bw.flush();
+
     }
 
-    private static int binarySearch(int target, int[] cards, int start, int end) {
-        if (start > end) return 0;
-
-        int mid = start + ((end - start) / 2);
-
-        if (target == cards[mid]) return 1;
-        else if (target > cards[mid]) return binarySearch(target, cards, mid + 1, end);
-        else return binarySearch(target, cards, start, mid - 1);
-    }
 }
