@@ -21,22 +21,19 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
             int find = Integer.parseInt(st.nextToken());
-            int start = 0;
-            int end = N - 1;
-            int answer = 0;
-            while (start <= end) {
-                int mid = start + ((end - start) / 2);
-                if (find == cards[mid]) {
-                    answer = 1;
-                    break;
-                } else if (find > cards[mid]) start = mid + 1;
-                else end = mid - 1;
-            }
-            bw.write(answer + " ");
+            bw.write(binarySearch(find, cards, 0, N - 1) + " ");
         }
 
         bw.flush();
 
+    }
+
+    private static int binarySearch(int find, int[] cards, int start, int end) {
+        if (start > end) return 0;
+        int mid = start + (end - start) / 2;
+        if (find == cards[mid]) return 1;
+        else if (find > cards[mid]) return binarySearch(find, cards, mid + 1, end);
+        else return binarySearch(find, cards, start, mid - 1);
     }
 
 }
