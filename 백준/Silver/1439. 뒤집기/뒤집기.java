@@ -8,20 +8,21 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String str = br.readLine();
+        String S = br.readLine();
         int zero = 0;
         int one = 0;
 
-        if (str.charAt(0) == '0') zero++;
+        if (S.charAt(0) == '0') zero++;
         else one++;
 
-        for (int i = 1; i < str.length(); i++) {
-            if (str.charAt(i) != str.charAt(i - 1)) {
-                if (str.charAt(i) == '0') zero++;
+        for (int i = 1; i < S.length(); i++) {
+            if (S.charAt(i) != S.charAt(i - 1)) {
+                if (S.charAt(i) == '0') zero++;
                 else one++;
             }
         }
 
         System.out.println(Math.min(zero, one));
+
     }
 }
