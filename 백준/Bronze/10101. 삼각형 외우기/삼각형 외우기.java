@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 public class Main {
 
@@ -15,8 +14,7 @@ public class Main {
         int sum = 0;
 
         for (int i = 0; i < 3; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int num = Integer.parseInt(st.nextToken());
+            int num = Integer.parseInt(br.readLine());
             set.add(num);
             sum += num;
         }
