@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Stack;
 
 public class Main {
@@ -8,24 +10,23 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int T = Integer.parseInt(br.readLine());
-        for (int i = 0; i < T; i++) { // testCase
-            String test = br.readLine(); // (())())
+        for (int i = 0; i < T; i++) {
+            String input = br.readLine();
             Stack<Character> stack = new Stack<>();
-            boolean isYPS = true;
-            for (int j = 0; j < test.length(); j++) {
-                if (test.charAt(j) == '(') stack.push(test.charAt(j));
+            boolean isVPS = true;
+            for (int j = 0; j < input.length(); j++) {
+                if (input.charAt(j) == '(') stack.push(input.charAt(j));
                 else {
-                    if (stack.size() > 0) {
-                        stack.pop();
-                    } else {
-                        isYPS = false;
+                    if (stack.isEmpty()) {
+                        isVPS = false;
                         break;
+                    } else {
+                        stack.pop();
                     }
                 }
             }
-            if (stack.size() != 0) isYPS = false;
-
-            System.out.println(isYPS ? "YES" : "NO");
+            if (!stack.isEmpty()) isVPS = false;
+            System.out.println(isVPS ? "YES" : "NO");
         }
 
     }
