@@ -9,27 +9,27 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-        int[][] arr = new int[N + 1][N + 1];
+        int[][] graph = new int[N][N];
 
-        for (int i = 1; i <= N; i++) {
+        for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= N; j++) {
-                arr[i][j] = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < N; j++) {
+                graph[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
         // 플로이드-워셜 알고리즘
-        for (int k = 1; k <= N; k++) {
-            for (int i = 1; i <= N; i++) {
-                for (int j = 1; j <= N; j++) {
-                    if ((arr[i][k] == 1) && (arr[k][j] == 1)) arr[i][j] = 1;
+        for (int k = 0; k < N; k++) {
+            for (int s = 0; s < N; s++) {
+                for (int e = 0; e < N; e++) {
+                    if ((graph[s][k] == 1) && (graph[k][e] == 1)) graph[s][e] = 1;
                 }
             }
         }
 
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= N; j++) {
-                bw.write(arr[i][j] + " ");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                bw.write(graph[i][j] + " ");
             }
             bw.write("\n");
         }
