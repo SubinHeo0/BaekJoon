@@ -8,16 +8,15 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        long N = Long.parseLong(br.readLine());
+        long S = Long.parseLong(br.readLine());
         long sum = 0L;
         long num = 1L;
-
-        while (true) {
+        for (long l = 1; l <= S; l++) {
             sum += num;
-            if (sum > N) break;
+            if (sum > S) break;
             num++;
         }
-
+        
         System.out.println(num - 1);
 
     }
