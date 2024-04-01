@@ -10,11 +10,10 @@ public class Main {
 
         long S = Long.parseLong(br.readLine());
         long sum = 0L;
-        long num = 1L;
-        for (long l = 1; l <= S; l++) {
-            sum += num;
-            if (sum > S) break;
+        long num = 0L;
+        while (sum <= S) {
             num++;
+            sum += num;
         }
         
         System.out.println(num - 1);
