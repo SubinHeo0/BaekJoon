@@ -25,7 +25,6 @@ public class Main {
     private static int level(int[] log) {
         Arrays.sort(log);
 
-        int mid = log.length / 2;
         Queue<Integer> even = new LinkedList<>(); // 짝수 인덱스 값 모음
         Stack<Integer> odd = new Stack<>(); // 홀수 인덱스 값 모음 | 나중에 뒤집어서 even 뒤에 이어붙여야하므로 stack으로 구현
 
