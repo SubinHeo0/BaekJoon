@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -6,11 +8,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
         int[][] graph = new int[N][N];
-
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
@@ -18,7 +19,6 @@ public class Main {
             }
         }
 
-        // 플로이드-워셜 알고리즘
         for (int k = 0; k < N; k++) {
             for (int s = 0; s < N; s++) {
                 for (int e = 0; e < N; e++) {
@@ -27,14 +27,14 @@ public class Main {
             }
         }
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                bw.write(graph[i][j] + " ");
+        for (int[] row : graph) {
+            for (int col : row) {
+                sb.append(col).append(" ");
             }
-            bw.write("\n");
+            sb.append("\n");
         }
 
-        bw.flush();
+        System.out.println(sb);
 
     }
 }
