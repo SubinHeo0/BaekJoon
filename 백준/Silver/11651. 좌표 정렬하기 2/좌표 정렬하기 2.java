@@ -21,7 +21,7 @@ public class Main {
             arr[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        // y기준 정렬 | y가 같으면 x기준 정렬
+        // y기준 정렬, y가 같으면 x기준 정렬
         Arrays.sort(arr, Comparator.comparingInt((int[] a) -> a[1])
                 .thenComparingInt(a -> a[0]));
 
