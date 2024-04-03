@@ -15,7 +15,7 @@ public class Main {
             num++;
             sum += num;
         }
-        
+
         System.out.println(num - 1);
 
     }
