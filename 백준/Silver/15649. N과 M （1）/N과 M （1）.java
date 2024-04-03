@@ -28,8 +28,8 @@ public class Main {
 
     private static void dfs(int depth) {
         if (depth == M) {
-            for (int i = 0; i < M; i++) {
-                sb.append(arr[i]).append(" ");
+            for (int i : arr) {
+                sb.append(i).append(" ");
             }
             sb.append("\n");
             return;
@@ -43,6 +43,5 @@ public class Main {
                 visited[i] = false;
             }
         }
-
     }
 }
