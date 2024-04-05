@@ -28,7 +28,7 @@ public class Main {
 
         // 첫 번째 행부터 가능한지 검사
         for (int i = 0; i < N; i++) {
-            arr[depth] = i + 1;
+            arr[depth] = i;
             if (isPossible(depth)) nQueen(depth + 1);
         }
 
