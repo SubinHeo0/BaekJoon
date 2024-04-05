@@ -16,19 +16,19 @@ public class Main {
             int l = Integer.parseInt(st.nextToken());
             int n = Integer.parseInt(st.nextToken());
 
-            int min = Integer.MIN_VALUE;
-            int max = Integer.MIN_VALUE;
-
+            int totalMin = 0; // 개미들의 최솟값 중 가장 최댓값
+            int totalMax = 0;
             for (int j = 0; j < n; j++) {
                 int ant = Integer.parseInt(br.readLine());
 
-                int antMin = Math.min(ant, l - ant);
-                int antMax = Math.max(ant, l - ant);
+                int antMin = Math.min(ant, Math.abs(ant - l)); // 해당 개미의 최솟값
+                int antMax = Math.max(ant, Math.abs(ant - l)); // 해당 개미의 최댓값
 
-                min = Math.max(min, antMin);
-                max = Math.max(max, antMax);
+                totalMin = Math.max(totalMin, antMin);
+                totalMax = Math.max(totalMax, antMax);
+
             }
-            sb.append(min).append(" ").append(max).append("\n");
+            sb.append(totalMin).append(" ").append(totalMax).append("\n");
         }
 
         System.out.println(sb);
