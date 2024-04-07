@@ -27,9 +27,9 @@ public class Main {
             }
         }
 
-        for (int[] row : graph) {
-            for (int col : row) {
-                sb.append(col).append(" ");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                sb.append(graph[i][j]).append(" ");
             }
             sb.append("\n");
         }
