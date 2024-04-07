@@ -44,30 +44,9 @@ public class Main {
         if (now.value == mid) {
             now.left = (left == '.') ? null : new Node(left);
             now.right = (right == '.') ? null : new Node(right);
-            return;
         }
-
-        // now의 value와 mid값이 다르면 자식들을 타고 내려가면서 mid값과 같은 value를 지닌 노드를 찾아야함
-        Node leftNode = now.left;
-        Node rightNode = now.right;
-
-        if (leftNode != null) { // 왼쪽부터 내려가면서 mid값과 같은 node를 찾음
-            if (leftNode.value == mid) {// 같은 값을 찾았으면 트리에 삽입 삽입 하면 항상 리턴으로 걍 종료시킴
-                leftNode.left = (left == '.') ? null : new Node(left);
-                leftNode.right = (right == '.') ? null : new Node(right);
-                return;
-            }
-            insertTree(leftNode, mid, left, right);
-        }
-
-        if (rightNode != null) { // 오른쪽으로 내려가면서 mid값과 같은 node를 찾음
-            if (rightNode.value == mid) {// 같은 값을 찾았으면 트리에 삽입 삽입 하면 항상 리턴으로 걍 종료시킴
-                rightNode.left = (left == '.') ? null : new Node(left);
-                rightNode.right = (right == '.') ? null : new Node(right);
-                return;
-            }
-            insertTree(rightNode, mid, left, right);
-        }
+        if(now.left != null) insertTree(now.left, mid, left, right);
+        if(now.right != null) insertTree(now.right, mid, left, right);
     }
 
     // 루트, 왼쪽, 오른쪽
