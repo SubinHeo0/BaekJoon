@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
 
@@ -11,11 +13,10 @@ public class Main {
 
         int N = Integer.parseInt(br.readLine());
         screen = new int[N][N];
-
         for (int i = 0; i < N; i++) {
-            String[] tmp = br.readLine().split("");
+            String[] input = br.readLine().split("");
             for (int j = 0; j < N; j++) {
-                screen[i][j] = Integer.parseInt(tmp[j]);
+                screen[i][j] = Integer.parseInt(input[j]);
             }
         }
 
@@ -24,25 +25,22 @@ public class Main {
 
     }
 
-    private static void quadTree(int row, int col, int size) { // 0,0,N
-        // 전체가 같은 숫자면 대표 숫자 출력
-        if (isSame(row, col, size)) {
+    private static void quadTree(int row, int col, int size) {
+        if (isExistOne(row, col, size)) {
             sb.append(screen[row][col]);
             return;
         }
 
-        // 동서남북 쪼개서 quadTree
-        int mid = size / 2;
+        int newSize = size / 2;
         sb.append("(");
-        quadTree(row, col, mid); // 왼쪽 위
-        quadTree(row, col + mid, mid); // 오른쪽 위
-        quadTree(row + mid, col, mid); // 왼쪽 아래
-        quadTree(row + mid, col + mid, mid); // 오른쪽 아래
+        quadTree(row, col, newSize); // 왼쪽 위
+        quadTree(row, col + newSize, newSize); // 오른쪽 위
+        quadTree(row + newSize, col, newSize); // 왼쪽 아래
+        quadTree(row + newSize, col + newSize, newSize); // 오른쪽 아래
         sb.append(")");
     }
 
-    // 한 가지 숫자로만 구성되어 있는지 확인
-    private static boolean isSame(int row, int col, int size) {
+    private static boolean isExistOne(int row, int col, int size) {
         int num = screen[row][col];
         for (int i = row; i < row + size; i++) {
             for (int j = col; j < col + size; j++) {
@@ -51,5 +49,4 @@ public class Main {
         }
         return true;
     }
-
 }
