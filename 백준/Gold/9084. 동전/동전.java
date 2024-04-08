@@ -13,22 +13,24 @@ public class Main {
         int testCase = Integer.parseInt(br.readLine());
         for (int i = 0; i < testCase; i++) {
             int N = Integer.parseInt(br.readLine());
-            int[] coins = new int[N];
+            int coins[] = new int[N];
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 coins[j] = Integer.parseInt(st.nextToken());
             }
-            int M = Integer.parseInt(br.readLine());
 
+            int M = Integer.parseInt(br.readLine());
             int[] dp = new int[M + 1];
             dp[0] = 1;
             for (int coin : coins) {
-                for (int m = coin; m <= M; m++) {
-                    dp[m] += dp[m - coin];
+                for (int j = coin; j <= M; j++) {
+                    dp[j] = dp[j] + dp[j - coin];
                 }
             }
             sb.append(dp[M]).append("\n");
         }
+
         System.out.println(sb);
+
     }
 }
