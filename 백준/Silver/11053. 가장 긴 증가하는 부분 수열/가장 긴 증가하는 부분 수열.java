@@ -14,20 +14,20 @@ public class Main {
         int[] dp = new int[N + 1];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int answer = 0;
         for (int i = 1; i <= N; i++) {
+            int maxDp = 0;
             arr[i] = Integer.parseInt(st.nextToken());
-            dp[i] = 1;
-        }
-
-        int max = 1;
-        for (int i = 1; i <= N; i++) {
             for (int j = 1; j < i; j++) {
-                if (arr[i] > arr[j]) dp[i] = Math.max(dp[i], dp[j] + 1); // 이전 원소들 중 가장 큰 dp값 +1
+                if (arr[j] < arr[i]) {
+                    if (dp[j] > maxDp) maxDp = dp[j];
+                }
             }
-            max = Math.max(max, dp[i]);
+            dp[i] = maxDp + 1;
+            answer = Math.max(answer, dp[i]);
         }
 
-        System.out.println(max);
+        System.out.println(answer);
 
     }
 }
