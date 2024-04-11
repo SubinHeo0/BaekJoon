@@ -10,20 +10,22 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N + 1];
-        int[] dp = new int[N + 1];
+        int[] arr = new int[N];
+        int[] dp = new int[N];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int answer = 0;
-        for (int i = 1; i <= N; i++) {
-            int maxDp = 0;
-            arr[i] = Integer.parseInt(st.nextToken());
-            for (int j = 1; j < i; j++) {
-                if (arr[j] < arr[i]) {
-                    if (dp[j] > maxDp) maxDp = dp[j];
+        for (int i = 0; i < N; i++) {
+            int num = Integer.parseInt(st.nextToken());
+            arr[i] = num;
+
+            int max = 0;
+            for (int j = 0; j < i; j++) { // 전에 저장된 값들 중 현재 입력값보다 작은 값의 최대 dp구하기
+                if (arr[j] < num) {
+                    max = Math.max(max, dp[j]);
                 }
             }
-            dp[i] = maxDp + 1;
+            dp[i] = max + 1;
             answer = Math.max(answer, dp[i]);
         }
 
