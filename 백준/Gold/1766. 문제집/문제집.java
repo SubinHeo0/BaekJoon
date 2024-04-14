@@ -27,15 +27,15 @@ public class Main {
             indegree[last]++;
         }
 
-        Queue<Integer> q = new PriorityQueue<>();
+        Queue<Integer> q = new PriorityQueue<>(); // 쉬운 문제부터
         for (int i = 1; i <= N; i++) {
             if (indegree[i] == 0) q.offer(i);
         }
 
         while (!q.isEmpty()) {
-            Integer first = q.poll();
+            int first = q.poll();
             bw.write(first + " ");
-            for (Integer last : graph.get(first)) {
+            for (int last : graph.get(first)) {
                 indegree[last]--;
                 if (indegree[last] == 0) q.offer(last);
             }
