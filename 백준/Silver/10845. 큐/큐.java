@@ -1,40 +1,64 @@
 import java.io.*;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
+
+    private static List<Integer> queue = new ArrayList<>();
+    private static int lt = 0;
+    private static int rt = -1;
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        Deque<Integer> dq = new LinkedList<>();
-
         int N = Integer.parseInt(br.readLine());
-
         for (int i = 0; i < N; i++) {
-            String[] input = br.readLine().split(" ");
-            if (input.length == 2) { // push, pop
-                if (input[0].equals("push")) dq.add(Integer.parseInt(input[1]));
-            } else {
-                if (input[0].equals("pop")) {
-                    if (dq.isEmpty()) bw.write("-1");
-                    else bw.write(dq.pop() + "");
-                } else if (input[0].equals("size")) bw.write(dq.size() + "");
-                else if (input[0].equals("empty")) bw.write((dq.isEmpty()) ? "1" : "0");
-                else if (input[0].equals("front")) {
-                    if (dq.isEmpty()) bw.write("-1");
-                    else bw.write(dq.peekFirst() + "");
-                } else {
-                    if (dq.isEmpty()) bw.write("-1");
-                    else bw.write(dq.peekLast() + "");
-                }
-                bw.write("\n");
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            switch (st.nextToken()) {
+                case "push" -> push(Integer.parseInt(st.nextToken()));
+                case "pop" -> bw.write(pop() + "\n");
+                case "size" -> bw.write(size() + "\n");
+                case "empty" -> bw.write(empty() + "\n");
+                case "front" -> bw.write(front() + "\n");
+                case "back" -> bw.write(back() + "\n");
             }
         }
 
         bw.flush();
 
+    }
+
+    private static void push(int num) {
+        rt++;
+        queue.add(num);
+    }
+
+    private static int pop() {
+        if (empty() == 1) return -1;
+        int num = queue.get(lt);
+        lt++;
+        return num;
+    }
+
+    private static int size() {
+        return rt - lt + 1;
+    }
+
+    private static int empty() {
+        if (size() > 0) return 0;
+        return 1;
+    }
+
+    private static int front() {
+        if (empty() == 1) return -1;
+        return queue.get(lt);
+    }
+
+    private static int back() {
+        if (empty() == 1) return -1;
+        return queue.get(rt);
     }
 }
