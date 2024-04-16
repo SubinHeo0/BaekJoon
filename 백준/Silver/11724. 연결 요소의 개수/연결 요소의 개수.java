@@ -6,42 +6,48 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-    static boolean[] visitedNodes;
-    static List<Integer>[] edges;
+
+    public static List<List<Integer>> graph = new ArrayList<>();
+    public static boolean[] visit;
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-        visitedNodes = new boolean[N + 1];
-        edges = new ArrayList[N + 1];
-        for (int i = 1; i <= N; i++) {
-            edges[i] = new ArrayList<>();
+        visit = new boolean[N + 1];
+
+        for (int i = 0; i <= N; i++) {
+            graph.add(new ArrayList<>());
         }
+
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
-            edges[s].add(e);
-            edges[e].add(s);
+            int num1 = Integer.parseInt(st.nextToken());
+            int num2 = Integer.parseInt(st.nextToken());
+
+            graph.get(num1).add(num2);
+            graph.get(num2).add(num1);
         }
-        int count = 0;
+
+        int cnt = 0;
         for (int i = 1; i <= N; i++) {
-            if (!visitedNodes[i]) {
-                count++;
-                DFS(i);
+            if (!visit[i]) {
+                dfs(i);
+                cnt++;
             }
         }
-        System.out.println(count);
+
+        System.out.println(cnt);
+
     }
 
-    private static void DFS(int v) {
-        if (visitedNodes[v]) return;
-        visitedNodes[v] = true;
-        for (int i : edges[v]) {
-            if (!visitedNodes[i]) DFS(i);
+    private static void dfs(int i) {
+        visit[i] = true;
+        for (int neighbor : graph.get(i)) {
+            if (!visit[neighbor]) dfs(neighbor);
         }
     }
 }
