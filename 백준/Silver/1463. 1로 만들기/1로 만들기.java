@@ -12,10 +12,9 @@ public class Main {
         int[] dp = new int[N + 1];
 
         for (int i = 2; i <= N; i++) {
-            int min = Integer.MAX_VALUE;
-            if (i % 3 == 0) min = dp[i / 3];
+            int min = dp[i - 1];
+            if (i % 3 == 0) min = Math.min(min, dp[i / 3]);
             if (i % 2 == 0) min = Math.min(min, dp[i / 2]);
-            min = Math.min(min, dp[i - 1]);
             dp[i] = min + 1;
         }
 
