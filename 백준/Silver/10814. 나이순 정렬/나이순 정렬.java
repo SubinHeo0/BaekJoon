@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -13,29 +10,22 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int num = Integer.parseInt(br.readLine());
-        String[][] people = new String[num][2];
+        int N = Integer.parseInt(br.readLine());
+        String[][] member = new String[N][2];
 
-        for (int i = 0; i < people.length; i++) {
+        for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            people[i][0] = st.nextToken();
-            people[i][1] = st.nextToken();
+            member[i][0] = st.nextToken();
+            member[i][1] = st.nextToken();
         }
 
-        Arrays.sort(people, (e1, e2)->{ // 리턴값이 양수면 자리바뀜
-            return Integer.parseInt(e1[0])-Integer.parseInt(e2[0]);
-        });
-        
+        Arrays.sort(member, Comparator.comparingInt(e -> Integer.parseInt(e[0])));
 
-        // 출력
-        for (int i = 0; i < people.length; i++) {
-            bw.write(people[i][0] + " " + people[i][1] + "\n");
+        for (int i = 0; i < N; i++) {
+            bw.write(member[i][0] + " " + member[i][1] + "\n");
         }
 
-        br.close();
         bw.flush();
-        bw.close();
 
     }
-
 }
