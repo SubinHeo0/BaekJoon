@@ -13,7 +13,7 @@ public class Main {
         int[] alphabet = new int[26];
         char[] input = br.readLine().toCharArray();
         for (char c : input) {
-            alphabet[c - 97]++;
+            alphabet[c - 'a']++;
         }
 
         for (int cnt : alphabet) {
