@@ -15,12 +15,6 @@ public class Main {
             int A = Integer.parseInt(st.nextToken());
             int B = Integer.parseInt(st.nextToken());
 
-            if (A < B) {
-                int tmp = A;
-                A = B;
-                B = tmp;
-            }
-
             int D = gcd(A, B); // 최대공약수
             bw.write((A * B) / D + "\n");
         }
