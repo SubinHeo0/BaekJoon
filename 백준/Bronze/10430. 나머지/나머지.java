@@ -1,19 +1,24 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        int a = scanner.nextInt();
-        int b = scanner.nextInt();
-        int c = scanner.nextInt();
+    public static void main(String[] args) throws IOException {
 
-        System.out.println((a + b) % c);
-        System.out.println(((a % c) + (b % c)) % c);
-        System.out.println((a * b) % c);
-        System.out.println(((a % c) * (b % c)) % c);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        scanner.close();
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
+
+        bw.write((A + B) % C + "\n");
+        bw.write(((A % C) + (B % C)) % C + "\n");
+        bw.write((A * B) % C + "\n");
+        bw.write(((A % C) * (B % C)) % C + "");
+
+        bw.flush();
 
     }
 }
