@@ -11,18 +11,15 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         String input = br.readLine();
 
-        List<StringBuilder> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
-            StringBuilder sb = new StringBuilder();
-            for (int j = i; j < input.length(); j++) {
-                sb.append(input.charAt(j));
-            }
-            list.add(sb);
+            list.add(input.substring(i));
         }
 
         Collections.sort(list);
-        for (StringBuilder sb : list) {
-            bw.write(sb + "\n");
+
+        for (String str : list) {
+            bw.write(str + "\n");
         }
 
         bw.flush();
