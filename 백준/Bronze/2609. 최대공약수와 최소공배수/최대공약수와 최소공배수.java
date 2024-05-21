@@ -21,7 +21,11 @@ public class Main {
 
     // 유클리드 호제법
     private static int findGcd(int a, int b) {
-        if (b == 0) return a;
-        return findGcd(b, a % b);
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
     }
 }
