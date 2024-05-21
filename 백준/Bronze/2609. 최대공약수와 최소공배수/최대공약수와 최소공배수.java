@@ -1,27 +1,27 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Scanner sc = new Scanner(System.in);
-        int num1 = sc.nextInt();
-        int num2 = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        if (num2 > num1) {
-            int tmp = num2;
-            num2 = num1;
-            num1 = tmp;
-        }
+        int num1 = Integer.parseInt(st.nextToken());
+        int num2 = Integer.parseInt(st.nextToken());
 
-        int gcdResult = gcd(num1, num2); // 최대공약수
-        System.out.println(gcdResult);
-        System.out.println((num1 * num2) / gcdResult); // 최소공배수
+        int gcd = findGcd(num1, num2); // 최대공약수
+        System.out.println(gcd);
+        System.out.println((num1 * num2) / gcd);
 
     }
 
-    private static int gcd(int num1, int num2) {
-        if (num1 % num2 == 0) return num2;
-        return gcd(num2, num1 % num2);
+    // 유클리드 호제법
+    private static int findGcd(int a, int b) {
+        if (b == 0) return a;
+        return findGcd(b, a % b);
     }
 }
