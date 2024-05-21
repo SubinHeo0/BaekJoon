@@ -13,7 +13,6 @@ public class Main {
 
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-
         Queue<Integer> queue = new LinkedList<>();
 
         for (int i = 1; i <= N; i++) {
@@ -30,7 +29,6 @@ public class Main {
         bw.write(queue.poll() + ">");
 
         bw.flush();
-
 
     }
 }
