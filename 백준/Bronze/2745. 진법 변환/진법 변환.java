@@ -13,14 +13,15 @@ public class Main {
         String N = st.nextToken();
         int B = Integer.parseInt(st.nextToken());
 
-        int tmp = 1;
         int sum = 0;
-
-        for (int i = N.length() - 1; i >= 0; i--) {// 오른쪽부터 계산
-            char c = N.charAt(i);
-            if ('A' <= c && c <= 'Z') sum += (c - 'A' + 10) * tmp;
-            else sum += (c - '0') * tmp;
-            tmp *= B;
+        for (int i = N.length() - 1; i >= 0; i--) { // 몇 승
+            int idx = N.length() - 1 - i; // N의 왼쪽부터
+            char c = N.charAt(idx);
+            if ('0' <= c && c <= '9') {
+                sum += (c - '0') * Math.pow(B, i);
+            } else {
+                sum += (c - 'A' + 10) * Math.pow(B, i); // 10부터 A이기 때문에 10을 더해줌
+            }
         }
 
         System.out.println(sum);
