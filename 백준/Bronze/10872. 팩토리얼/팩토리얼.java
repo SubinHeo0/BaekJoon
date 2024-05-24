@@ -9,18 +9,13 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        long sum = 1L;
+        System.out.println(fact(N));
 
-        if (N == 0) {
-            System.out.println(1);
-            return;
-        }
+    }
 
-        for (int i = N; i > 0; i--) {
-            sum *= i;
-        }
-
-        System.out.println(sum);
-
+    private static int fact(int n) {
+        if (n == 0) return 1;
+        if (n == 1) return 1;
+        return n * fact(n - 1);
     }
 }
