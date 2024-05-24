@@ -1,6 +1,7 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
@@ -10,18 +11,24 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
+        List<Integer> list = new ArrayList<>();
+
         if (N == 0) {
             System.out.println(0);
             return;
         }
 
         while (N != 0) {
-            sb.append(Math.abs(N % -2));
+            list.add(Math.abs(N % -2));
             N = (int) Math.ceil((double) N / -2);
-
         }
 
-        System.out.println(sb.reverse());
+        Collections.reverse(list);
+        for (int n : list) {
+            sb.append(n);
+        }
+
+        System.out.println(sb);
 
     }
 }
