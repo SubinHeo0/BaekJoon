@@ -1,35 +1,35 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        final int MOD = 10007;
         int N = Integer.parseInt(br.readLine());
-        int[][] dp = new int[N + 1][10]; //[자릿수][값]
-        for (int i = 0; i < 10; i++) {
-            dp[1][i] = 1;
-        }
+        int[][] dp = new int[N + 1][10];
 
-        for (int i = 2; i <= N; i++) { // 자릿수
-            for (int val = 0; val < 10; val++) { // 값
-                for (int j = val; j < 10; j++) { // 자릿수
-                    dp[i][val] += dp[i - 1][j] % MOD;
+        // dp[1] = 1로 초기화
+        Arrays.fill(dp[1], 1);
+
+        // dp[N][j] = dp[N-1][j] + ... + dp[N-1][10]
+        for (int i = 2; i <= N; i++) {
+            for (int j = 0; j < 10; j++) {
+                for (int k = j; k < 10; k++) {
+                    dp[i][j] += dp[i - 1][k];
+                    dp[i][j] %= 10007;
                 }
             }
         }
 
-        int sum = 0;
+        int answer = 0;
         for (int i = 0; i < 10; i++) {
-            sum += dp[N][i] % MOD;
+            answer += dp[N][i];
+            answer %= 10007;
         }
 
-        System.out.println(sum % MOD);
-
-
+        System.out.println(answer);
     }
 }
