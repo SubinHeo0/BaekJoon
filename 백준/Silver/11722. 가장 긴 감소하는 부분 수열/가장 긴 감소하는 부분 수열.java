@@ -9,27 +9,29 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         int N = Integer.parseInt(br.readLine());
-        int[] A = new int[N + 1];
-        int[] dp = new int[N + 1];
-        Arrays.fill(dp, 1);
+        int[] arr = new int[N + 1];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int answer = 0;
         for (int i = 1; i <= N; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        int[] dp = new int[N + 1];
+        dp[1] = 1;
+        for (int i = 2; i <= N; i++) {
+            // 이전 값들중 자신보다 큰 값들 중 최대 dp를 찾아서 +1
             int max = 0;
-            for(int j=0; j<i; j++){
-                if(A[j] > A[i]){
+            for (int j = 1; j < i; j++) {
+                if (arr[j] > arr[i]) {
                     max = Math.max(max, dp[j]);
                 }
             }
-            dp[i] += max;
-            answer = Math.max(answer, dp[i]);
+            dp[i] = max + 1;
         }
 
-        System.out.println(answer);
+        Arrays.sort(dp);
+        System.out.println(dp[N]);
 
     }
 }
