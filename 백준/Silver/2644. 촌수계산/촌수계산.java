@@ -37,6 +37,7 @@ public class Main {
         }
 
         int answer = bfs(start, end);
+        // level == 0 이면 -1출력
         System.out.println(answer != 0 ? answer : -1);
 
     }
@@ -44,7 +45,6 @@ public class Main {
     private static int bfs(int start, int end) {
         Queue<Integer> q = new LinkedList<>();
         q.offer(start);
-        isVisited[start] = true;
 
         int level = 0;
         boolean flag = false;
@@ -52,18 +52,21 @@ public class Main {
             int size = q.size();
             for (int i = 0; i < size; i++) {
                 int now = q.poll();
-                if (now == end) {
-                    flag = true;
-                    return level;
-                }
+                isVisited[now] = true;
                 // now의 부모와 now의 children 큐에 삽입(방문하지 않았으면)
                 if (parent[now] != 0 && !isVisited[parent[now]]) {
-                    isVisited[parent[now]] = true;
+                    if (parent[now] == end) {
+                        flag = true;
+                        return level + 1;
+                    }
                     q.offer(parent[now]);
                 }
                 for (int child : children.get(now)) {
                     if (!isVisited[child]) {
-                        isVisited[child] = true;
+                        if (child == end) {
+                            flag = true;
+                            return level + 1;
+                        }
                         q.offer(child);
                     }
                 }
