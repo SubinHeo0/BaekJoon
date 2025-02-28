@@ -5,11 +5,9 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    private static int N;
-    private static int M;
-    private static int[] arr;
-    private static boolean[] visited;
-    private static StringBuilder sb = new StringBuilder();
+    private static int N, M;
+    private static int[] answer;
+    private static boolean[] isVisited;
 
     public static void main(String[] args) throws IOException {
 
@@ -18,30 +16,32 @@ public class Main {
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        arr = new int[M];
-        visited = new boolean[N];
+
+        answer = new int[M];
+        isVisited = new boolean[N + 1];
 
         dfs(0);
-        System.out.println(sb);
 
     }
 
-    private static void dfs(int depth) {
-        if (depth == M) {
-            for (int i : arr) {
-                sb.append(i).append(" ");
+    private static void dfs(int idx) {
+        if (idx == M) {
+            for (int i : answer) {
+                System.out.print(i + " ");
             }
-            sb.append("\n");
+            System.out.println();
             return;
         }
 
-        for (int i = 0; i < N; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                arr[depth] = i + 1;
-                dfs(depth + 1);
-                visited[i] = false;
+        for (int i = 1; i <= N; i++) {
+            if (!isVisited[i]) {
+                answer[idx] = i;
+                isVisited[i] = true;
+                dfs(idx + 1);
+                isVisited[i] = false;
             }
         }
     }
+
+
 }
