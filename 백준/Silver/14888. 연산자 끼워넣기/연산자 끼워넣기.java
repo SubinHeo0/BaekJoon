@@ -1,16 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.StringTokenizer;
 
 public class Main {
 
     private static int N;
     private static int[] nums;
-    private static int[] operator = new int[4]; // + - * / 개수 저장
-    private static List<Integer> detailOp = new ArrayList<>(); // 사용되는 연산자 번호를 모두 저장 [0,2,2,2, ...]
-    private static boolean[] isVisited;
-    private static int[] sequence;
+    private static int[] op = new int[4]; // + - * /
     private static int max = Integer.MIN_VALUE;
     private static int min = Integer.MAX_VALUE;
 
@@ -29,72 +26,40 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < 4; i++) {
-            operator[i] = Integer.parseInt(st.nextToken());
-            if (operator[i] != 0) {
-                for (int j = 0; j < operator[i]; j++) {
-                    detailOp.add(i);
-                }
-            }
+            op[i] = Integer.parseInt(st.nextToken());
         }
 
-        isVisited = new boolean[detailOp.size()];
-        sequence = new int[detailOp.size()];
-
-        dfs(0);
+        dfs(1, nums[0]);
         System.out.println(max);
         System.out.println(min);
 
     }
 
-    private static void dfs(int idx) { // sequence 배열 채우기(연산자 순열 구하기)
-        if (idx == detailOp.size()) {
-            Queue<Integer> q = new LinkedList<>();
-            for (int i = 0; i < sequence.length; i++) {
-                q.offer(nums[i]);
-                q.offer(sequence[i]);
-            }
-            q.offer(nums[N - 1]);
-
-            calculate(q);
+    private static void dfs(int idx, int sum) {
+        if (idx == N) {
+            max = Math.max(max, sum);
+            min = Math.min(min, sum);
             return;
         }
-
-        for (int i = 0; i < detailOp.size(); i++) {
-            if (!isVisited[i]) {
-                isVisited[i] = true;
-                sequence[idx] = detailOp.get(i);
-                dfs(idx + 1);
-                isVisited[i] = false;
+        for (int i = 0; i < 4; i++) { // 연산자를 돌면서 순열 만들기
+            if (op[i] > 0) {
+                op[i]--;
+                switch (i) {
+                    case 0:
+                        dfs(idx + 1, sum + nums[idx]);
+                        break;
+                    case 1:
+                        dfs(idx + 1, sum - nums[idx]);
+                        break;
+                    case 2:
+                        dfs(idx + 1, sum * nums[idx]);
+                        break;
+                    default:
+                        dfs(idx + 1, sum / nums[idx]);
+                }
+                op[i]++;
             }
         }
-    }
-
-    private static void calculate(Queue<Integer> q) {
-        int sum = q.poll();
-        while (!q.isEmpty()) {
-            int op = q.poll();
-            int num = q.poll();
-            sum = cal(sum, op, num);
-        }
-
-        min = Math.min(min, sum);
-        max = Math.max(max, sum);
-    }
-
-    private static int cal(int sum, int op, int num) {
-        switch (op) {
-            case 0:
-                return sum + num;
-            case 1:
-                return sum - num;
-            case 2:
-                return sum * num;
-            case 3:
-                int answer = Math.abs(sum) / num;
-                return sum > 0 ? answer : -answer;
-
-        }
-        return 0;
     }
 
 }
