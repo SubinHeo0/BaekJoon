@@ -48,15 +48,16 @@ public class Main {
         for (int i = 0; i < N - 1; i++) {
             int heightDiff = height[i] - height[i + 1];
 
-            if (Math.abs(heightDiff) >= 2) return false;
+            if (heightDiff == 0) continue;
+            if (Math.abs(heightDiff) > 1) return false;
 
             // 내리막
             if (heightDiff == 1) {
                 for (int j = i + 1; j <= i + L; j++) {
                     if (j < 0 || j >= N) return false;
                     if (isRunway[j] || height[i + 1] != height[j]) return false;
-                    isRunway[j] = true;
                 }
+                for (int j = i + 1; j <= i + L; j++) isRunway[j] = true;
             }
 
             // 오르막
@@ -64,8 +65,8 @@ public class Main {
                 for (int j = i; j > i - L; j--) {
                     if (j < 0 || j >= N) return false;
                     if (isRunway[j] || height[i] != height[j]) return false;
-                    isRunway[j] = true;
                 }
+                for (int j = i; j > i - L; j--) isRunway[j] = true;
             }
         }
 
