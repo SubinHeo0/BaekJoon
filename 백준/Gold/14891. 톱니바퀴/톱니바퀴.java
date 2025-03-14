@@ -1,27 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-
-class Turn {
-    boolean isTurn = false;
-    int dir = 0;
-
-    public Turn() {};
-
-    public Turn(boolean isTurn, int dir) {
-        this.isTurn = isTurn;
-        this.dir = dir;
-    }
-
-}
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
 
     private static List<int[]> wheels = new ArrayList<>();
-    private static boolean[] isVisited;
-    private static Turn[] turn; // 각 바퀴의 회전유무, 방향 저장
-    private static int[] side = {-1, 1}; // 왼쪽 바퀴, 오른쪽 바퀴
 
     public static void main(String[] args) throws IOException {
 
@@ -54,55 +40,40 @@ public class Main {
     }
 
     private static void start(int num, int dir) {
-        isVisited = new boolean[4];
-        turn = new Turn[4];
-        Queue<Integer> q = new LinkedList<>();
+        int[] direction = new int[4];
+        direction[num] = dir;
 
-        isVisited[num] = true;
-        turn[num] = new Turn(true, dir);
-        q.offer(num);
-
-        while (!q.isEmpty()) {
-            int now = q.poll();
-            if (now == -1) continue;
-
-            // 양 옆 바퀴 확인
-            for (int i = 0; i < 2; i++) {
-                int next = now + side[i];
-                if (next < 0 || next >= 4 || isVisited[next]) continue;
-
-                isVisited[next] = true;
-                turn[next] = new Turn(); // 초기화(isTurn=false, dir=0)
-                q.offer(next);
-
-                int leftWheel = (i == 0) ? next : now;
-                int rightWheel = (i == 0) ? now : next;
-                if (turn[now].isTurn && wheels.get(leftWheel)[2] != wheels.get(rightWheel)[6]) {
-                    turn[next] = new Turn(true, -turn[now].dir);
-                }
-            }
+        // 왼쪽 톱니바퀴
+        for (int i = num - 1; i >= 0; i--) {
+            if (wheels.get(i)[2] != wheels.get(i + 1)[6]) direction[i] = -direction[i + 1];
+            else break;
         }
-        turnWheel(turn);
-    }
 
-    private static void turnWheel(Turn[] turn) {
+        // 오른쪽 톱니바퀴
+        for (int i = num + 1; i < 4; i++) {
+            if (wheels.get(i)[6] != wheels.get(i - 1)[2]) direction[i] = -direction[i - 1];
+            else break;
+        }
+
+        // 회전
         for (int i = 0; i < 4; i++) {
-            if (!turn[i].isTurn) continue;
-
-            int[] wheel = wheels.get(i);
-
-            if (turn[i].dir == -1) { // 반시계 방향 회전
-                int tmp = wheel[0];
-                for (int j = 1; j < 8; j++) wheel[j - 1] = wheel[j];
-                wheel[7] = tmp;
-            }
-
-            if (turn[i].dir == 1) { // 시계 방향 회전
-                int tmp = wheel[7];
-                for (int j = 6; j >= 0; j--) wheel[j + 1] = wheel[j];
-                wheel[0] = tmp;
-            }
+            if (direction[i] != 0) turn(i, direction[i]);
         }
     }
+
+    private static void turn(int num, int dir) {
+        int[] wheel = wheels.get(num);
+        if (dir == -1) { // 반시걔 방향 회전
+            int tmp = wheel[0];
+            for (int i = 1; i < 8; i++) wheel[i - 1] = wheel[i];
+            wheel[7] = tmp;
+        }
+        if (dir == 1) { // 시계 방향 회전
+            int tmp = wheel[7];
+            for (int i = 6; i >= 0; i--) wheel[i + 1] = wheel[i];
+            wheel[0] = tmp;
+        }
+    }
+
 
 }
