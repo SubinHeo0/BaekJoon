@@ -52,6 +52,7 @@ public class Main {
                     List.of(0, 1, 2, 3)
             )
     );
+    private static int[] comb; // 방향 인덱스 저장
     private static int answer = 0;
 
     public static void main(String[] args) throws IOException {
@@ -75,28 +76,39 @@ public class Main {
             }
         }
 
-        combination(0, office);
+        comb = new int[cctv.size()];
+        combination(0);
         System.out.println(answer);
 
     }
 
-    private static void combination(int idx, int[][] office) {
-        if (idx == cctv.size()) {
-            answer = Math.min(answer, checkBlind(office));
+    private static void combination(int idx) {
+        if (idx == cctv.size()) { // 조합 1개 완성
+            int[][] copy = seeCctv();
+            answer = Math.min(answer, checkBlind(copy));
             return;
         }
 
         int cctvNum = cctv.get(idx).num;
-        int row = cctv.get(idx).row;
-        int col = cctv.get(idx).col;
-
         for (int i = 0; i < cctvDir.get(cctvNum).size(); i++) {
-            int[][] copy = new int[N][M];
-            for (int j = 0; j < N; j++) {
-                copy[j] = office[j].clone();
-            }
+            comb[idx] = i;
+            combination(idx + 1);
+        }
 
-            List<Integer> direction = cctvDir.get(cctvNum).get(i);
+    }
+
+    private static int[][] seeCctv() {
+        int[][] copy = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            copy[i] = office[i].clone();
+        }
+
+        for (int i = 0; i < comb.length; i++) {
+            int cctvNum = cctv.get(i).num;
+            int row = cctv.get(i).row;
+            int col = cctv.get(i).col;
+
+            List<Integer> direction = cctvDir.get(cctvNum).get(comb[i]);
             for (int j = 0; j < direction.size(); j++) {
                 int dir = direction.get(j);
                 int nr = row + dr[dir];
@@ -110,9 +122,8 @@ public class Main {
                     nc += dc[dir];
                 }
             }
-
-            combination(idx + 1, copy);
         }
+        return copy;
     }
 
     private static int checkBlind(int[][] office) {
