@@ -1,27 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-
-class Dust {
-    int row;
-    int col;
-    int amount;
-
-    public Dust(int row, int col, int amount) {
-        this.row = row;
-        this.col = col;
-        this.amount = amount;
-    }
-}
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
 
     private static int R, C;
     private static int[][] A;
     private static List<Integer> filter = new ArrayList<>();
-    private static List<Dust> dust; // 미세먼지
-    private static List<Integer> dirCnt; // 미세먼지가 확산될 수 있는 방향 개수
     private static int[] dr = {-1, 0, 1, 0};
     private static int[] dc = {0, 1, 0, -1};
 
@@ -44,14 +32,7 @@ public class Main {
         }
 
         for (int i = 0; i < T; i++) {
-            dust = new ArrayList<>();
-            dirCnt = new ArrayList<>();
-            for (int row = 1; row <= R; row++) {
-                for (int col = 1; col <= C; col++) {
-                    if (A[row][col] != -1 && A[row][col] != 0) dust.add(new Dust(row, col, A[row][col]));
-                }
-            }
-            spread();
+            A = spread();
             clean();
         }
 
@@ -66,42 +47,26 @@ public class Main {
 
     }
 
-    private static void spread() {
-        // 미세먼지 확산 가능 방향 좌표 및 양 확인
-        Queue<Dust> q = checkSpreadDir();
-        // 확산
-        while (!q.isEmpty()) {
-            for (int i = 0; i < dust.size(); i++) {
-                int cnt = dirCnt.get(i);
-                for (int j = 0; j < cnt; j++) {
-                    Dust now = q.poll(); // 퍼트려야할 좌표와 양
-                    A[now.row][now.col] += now.amount;
-
-                    Dust source = dust.get(i);
-                    A[source.row][source.col] -= now.amount;
-                    if (A[source.row][source.col] < 0) A[source.row][source.col] = 0;
+    private static int[][] spread() {
+        int[][] tmp = new int[R + 1][C + 1];
+        for (int i = 1; i <= R; i++) {
+            for (int j = 1; j <= C; j++) {
+                if (A[i][j] == -1) {
+                    tmp[i][j] = -1;
+                    continue;
+                }
+                tmp[i][j] += A[i][j];
+                for (int k = 0; k < 4; k++) {
+                    int nr = i + dr[k];
+                    int nc = j + dc[k];
+                    if (nr <= 0 || nc <= 0 || nr > R || nc > C) continue;
+                    if (A[nr][nc] == -1) continue;
+                    tmp[nr][nc] += A[i][j] / 5;
+                    tmp[i][j] -= A[i][j] / 5;
                 }
             }
         }
-
-    }
-
-    private static Queue<Dust> checkSpreadDir() {
-        Queue<Dust> q = new LinkedList<>(); // 미세먼지 확산 좌표, 양 저장
-        for (int i = 0; i < dust.size(); i++) {
-            Dust now = dust.get(i);
-            int cnt = 0;
-            for (int j = 0; j < 4; j++) {
-                int nr = now.row + dr[j];
-                int nc = now.col + dc[j];
-                if (nr <= 0 || nc <= 0 || nr > R || nc > C) continue;
-                if (A[nr][nc] == -1) continue;
-                q.offer(new Dust(nr, nc, now.amount / 5));
-                cnt++;
-            }
-            dirCnt.add(cnt);
-        }
-        return q;
+        return tmp;
     }
 
     private static void clean() {
